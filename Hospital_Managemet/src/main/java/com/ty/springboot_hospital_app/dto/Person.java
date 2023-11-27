@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -19,6 +22,9 @@ public class Person
 	private String name;
 	@NotBlank(message = "email can't be blank")
 	private String email;
+	@Min(value = 6000000000l, message="Phone number not valid")
+	@Max(value = 9999999999l, message="Phone number not valid")
+	//@Size(max=999999999,min=600000000,message="criteria not met")
 	private long phone;
 	public int getId() {
 		return id;

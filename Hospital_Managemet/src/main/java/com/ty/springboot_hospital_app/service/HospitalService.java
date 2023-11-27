@@ -1,5 +1,7 @@
 package com.ty.springboot_hospital_app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ty.springboot_hospital_app.dao.HospitalDao;
 import com.ty.springboot_hospital_app.dto.Hospital;
+import com.ty.springboot_hospital_app.service.exception.DataNotFoundException;
 import com.ty.springboot_hospital_app.service.exception.EmailNotFoundException;
 import com.ty.springboot_hospital_app.service.exception.IdNotFoundException;
 import com.ty.springboot_hospital_app.util.ResponseStructure;
@@ -64,18 +67,34 @@ public class HospitalService {
 		}
 	}
 	
-	public ResponseEntity<ResponseStructure<Hospital>> findHospitalByEmail(String email)
+	public ResponseEntity<ResponseStructure<List<Hospital>>> findAllHospitals()
 	{
-		Hospital hospital = dao.getHospitalByEmail(email);
-		if (hospital != null) {
-			ResponseStructure<Hospital> structure = new ResponseStructure<>();
+		List<Hospital> list=dao.getAllHospitals();
+		if(list.isEmpty())
+		{
+			throw new DataNotFoundException("Data Not found");
+		}
+		else
+		{
+			ResponseStructure<List<Hospital>> structure = new ResponseStructure<>();
 			structure.setMessage("Successfully Found");
 			structure.setStatus(HttpStatus.OK.value());
-			structure.setData(hospital);
-			return new ResponseEntity<ResponseStructure<Hospital>>(structure, HttpStatus.OK);
-		} else {
-			throw new EmailNotFoundException("email not found for Hospital");
+			structure.setData(list);
+			return new ResponseEntity<ResponseStructure<List<Hospital>>>(structure, HttpStatus.FOUND);
 		}
 	}
-
+	
+//	public ResponseEntity<ResponseStructure<Hospital>> findHospitalByEmail(String email)
+//	{
+//		Hospital hospital = dao.getHospitalByEmail(email);
+//		if (hospital != null) {
+//			ResponseStructure<Hospital> structure = new ResponseStructure<>();
+//			structure.setMessage("Successfully Found");
+//			structure.setStatus(HttpStatus.OK.value());
+//			structure.setData(hospital);
+//			return new ResponseEntity<ResponseStructure<Hospital>>(structure, HttpStatus.OK);
+//		} else {
+//			throw new EmailNotFoundException("email not found for Hospital");
+//		}
+//	}
 }

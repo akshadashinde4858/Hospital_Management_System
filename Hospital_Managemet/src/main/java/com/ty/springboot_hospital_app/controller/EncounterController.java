@@ -31,6 +31,7 @@ public class EncounterController {
 	@ApiOperation(value = "Save Encounter", notes = "Api is used to save encounter using person_id & branch_id")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successfully saved"),
 			@ApiResponse(code = 404, message = "Id not found for person or branch") })
+	@PostMapping
 	public ResponseEntity<ResponseStructure<Encounter>> saveEncounter(@Valid @RequestBody Encounter encounter,
 			@RequestParam int pid, @RequestParam int bid) {
 		return service.saveEncounter(encounter, pid, bid);
@@ -39,6 +40,7 @@ public class EncounterController {
 	@ApiOperation(value = "Update Encounter", notes = "Api is used to update encounter using encounter_id & branch_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
 			@ApiResponse(code = 404, message = "Id not found for encounter or branch") })
+	@PutMapping
 	public ResponseEntity<ResponseStructure<Encounter>> updateEncounter(@Valid @RequestParam int id,
 			@RequestBody Encounter encounter, @RequestParam int bid) {
 		return service.updateEncounter(id, encounter, bid);
@@ -47,6 +49,7 @@ public class EncounterController {
 	@ApiOperation(value = "Delete Encounter", notes = "Api is used to delete encounter using encounter_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted"),
 			@ApiResponse(code = 404, message = "Id not found for encounter") })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<Encounter>> deleteEncounter(@Valid @RequestParam int id) {
 		return service.deleteEncounter(id);
 	}
@@ -54,6 +57,7 @@ public class EncounterController {
 	@ApiOperation(value = "Get Encounter By Id", notes = "Api is used to fetch encounter using encounter_id")
 	@ApiResponses(value = { @ApiResponse(code = 302, message = "Successfully found"),
 			@ApiResponse(code = 404, message = "Id not found for encounter") })
+	@GetMapping
 	public ResponseEntity<ResponseStructure<Encounter>> getEncounter(@Valid @RequestParam int id) {
 		return service.getEncounter(id);
 	}

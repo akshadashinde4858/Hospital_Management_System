@@ -29,9 +29,9 @@ public class EncounterService {
 
 	public ResponseEntity<ResponseStructure<Encounter>> saveEncounter(Encounter encounter, int pid, int bid) {
 		Person person = personDao.getPersonById(pid);
-		Branch branch = branchDao.getBranchById(bid);
-
 		encounter.setPerson(person);
+		
+		Branch branch = branchDao.getBranchById(bid);
 		List<Branch> branchs = new ArrayList<>();
 		branchs.add(branch);
 		encounter.setBranchs(branchs);
@@ -45,13 +45,25 @@ public class EncounterService {
 	}
 
 	public ResponseEntity<ResponseStructure<Encounter>> updateEncounter(int id, Encounter encounter, int bid) {
-		Encounter dbEncounter = dao.getEncounterById(id);
+		
+		//new branch
 		Branch branch = branchDao.getBranchById(bid);
+		
+		Encounter dbEncounter = dao.getEncounterById(id);
 
 		List<Branch> branchs = dbEncounter.getBranchs();
 		branchs.add(branch);
+		
 		encounter.setBranchs(branchs);
 		encounter.setPerson(dbEncounter.getPerson());
+		
+		if(encounter.getCost() == 0) {
+			encounter.setCost(dbEncounter.getCost());
+		}
+		
+		if(encounter.getReason() == null) {
+			encounter.setReason(dbEncounter.getReason());			
+		}
 
 		ResponseStructure<Encounter> structure = new ResponseStructure<>();
 		structure.setMessage("Updated");
@@ -75,16 +87,26 @@ public class EncounterService {
 		}
 	}
 
-	public ResponseEntity<ResponseStructure<Encounter>> getEncounter(int id) {
+	public ResponseEntity<ResponseStructure<Encounter>> getEncounter(int id) 
+	{
 		Encounter encounter = dao.getEncounterById(id);
-		if (encounter != null) {
+		
+		List<Branch> branchs=encounter.getBranchs();
+		Person person=encounter.getPerson();
+		
+		if (encounter != null) 
+		{
+			encounter.setBranchs(branchs);
+			encounter.setPerson(person);
+			
 			ResponseStructure<Encounter> structure = new ResponseStructure<>();
 			structure.setMessage("Found");
 			structure.setStatus(HttpStatus.FOUND.value());
 			structure.setData(encounter);
 
 			return new ResponseEntity<ResponseStructure<Encounter>>(structure, HttpStatus.FOUND);
-		} else {
+		} else 
+		{
 			throw new IdNotFoundException("Id not found for Encounter");
 		}
 	}

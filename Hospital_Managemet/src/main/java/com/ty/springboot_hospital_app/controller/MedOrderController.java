@@ -22,8 +22,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping("medorder")
-public class MedOrderController {
+@RequestMapping("/medorder")
+public class MedOrderController
+{
 
 	@Autowired
 	private MedOrderService service;
@@ -31,6 +32,7 @@ public class MedOrderController {
 	@ApiOperation(value = "Save MedOrder", notes = "Api is used to save medorder using encounter_id")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successfully saved"),
 			@ApiResponse(code = 404, message = "Id not found for encounter") })
+	@PostMapping
 	public ResponseEntity<ResponseStructure<MedOrder>> saveMedOrder(@Valid @RequestBody MedOrder medOrder,
 			@RequestParam int eid) {
 		return service.saveMedOrder(medOrder, eid);
@@ -39,6 +41,7 @@ public class MedOrderController {
 	@ApiOperation(value = "Update MedOrder", notes = "Api is used to update medorder using medorder_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
 			@ApiResponse(code = 404, message = "Id not found for medorder") })
+	@PutMapping
 	public ResponseEntity<ResponseStructure<MedOrder>> updateMedOrder(@Valid @RequestParam int id,
 			@RequestBody MedOrder medOrder) {
 		return service.updateMedOrder(id, medOrder);
@@ -47,6 +50,7 @@ public class MedOrderController {
 	@ApiOperation(value = "Get MedOrder By Id", notes = "Api is used to fetch medorder using medorder_id")
 	@ApiResponses(value = { @ApiResponse(code = 302, message = "Successfully found"),
 			@ApiResponse(code = 404, message = "Id not found for medorder") })
+	@GetMapping
 	public ResponseEntity<ResponseStructure<MedOrder>> getMedOrderById(@Valid @RequestParam int id) {
 		return service.getMedOrderById(id);
 	}
@@ -54,6 +58,7 @@ public class MedOrderController {
 	@ApiOperation(value = "Delete MedOrder", notes = "Api is used to delete medorder using medorder_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted"),
 			@ApiResponse(code = 404, message = "Id not found for medorder") })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<MedOrder>> deleteMedOrder(@Valid @RequestParam int id) {
 		return service.deleteMedOrder(id);
 	}

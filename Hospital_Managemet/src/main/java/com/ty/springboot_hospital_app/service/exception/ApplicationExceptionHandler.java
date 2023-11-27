@@ -23,6 +23,15 @@ import com.ty.springboot_hospital_app.util.ResponseStructure;
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
+	@ExceptionHandler(DataNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> dataNotFoundExceptionHandler(DataNotFoundException exception) {
+		ResponseStructure<String> structure = new ResponseStructure<>();
+		structure.setMessage(exception.getMessage());
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData("Data not found");
+		return new ResponseEntity<ResponseStructure<String>>(structure, HttpStatus.NOT_FOUND);
+	}
+	
 	@ExceptionHandler(IdNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> idNotFoundExceptionHandler(IdNotFoundException exception) {
 		ResponseStructure<String> structure = new ResponseStructure<>();

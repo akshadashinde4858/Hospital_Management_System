@@ -45,9 +45,9 @@ public class HospitalDao {
 		return repo.findAll();
 	}
 
-	public Hospital getHospitalByEmail(String email) 
-	{
-		return repo.findByEmail(email);
-	}
+//	public Hospital getHospitalByEmail(String email) 
+//	{
+//		return repo.findByEmail(email).get(0);
+//	}
 
 }

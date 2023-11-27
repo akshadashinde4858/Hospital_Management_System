@@ -35,7 +35,14 @@ public class EncounterDao {
 		}
 	}
 
-	public Encounter getEncounterById(int id) {
-		return repo.findById(id).get();
+	public Encounter getEncounterById(int id) 
+	{
+		if (repo.findById(id).isPresent()) 
+		{
+			Encounter encounter = repo.findById(id).get();
+			return encounter;
+		} else {
+			return null;
+		}
 	}
 }

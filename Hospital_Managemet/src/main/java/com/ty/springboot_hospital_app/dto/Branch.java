@@ -22,7 +22,7 @@ public class Branch {
 	@NotBlank(message = "name can't be blank")
 	private String name;
 	@NotNull(message = "phone can't be blank")
-	@Pattern(regexp = "[6-9][0-9]{9}")
+	//@Pattern(regexp = "[6-9][0-9]{9}")
 	private long phone;
 	@NotBlank(message = "manager can't be blank")
 	private String manager;

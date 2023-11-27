@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ty.springboot_hospital_app.dao.AddressDao;
 import com.ty.springboot_hospital_app.dto.Address;
+import com.ty.springboot_hospital_app.service.exception.DataNotFoundException;
 import com.ty.springboot_hospital_app.service.exception.IdNotFoundException;
 import com.ty.springboot_hospital_app.util.ResponseStructure;
 
@@ -62,5 +63,19 @@ public class AddressService {
 			throw new IdNotFoundException("Id not found for Address");
 		}
 	}
-
+	
+	public ResponseEntity<ResponseStructure<Address>> findAddressByPincode(int pincode)
+	{
+		Address address=dao.findAddressByPincode(pincode);
+		if (address != null) {
+			ResponseStructure<Address> structure = new ResponseStructure<>();
+			structure.setMessage("Successfully Found");
+			structure.setStatus(HttpStatus.OK.value());
+			structure.setData(address);
+			return new ResponseEntity<ResponseStructure<Address>>(structure, HttpStatus.OK);
+		} else 
+		{
+			throw new DataNotFoundException("Data not found for Address");
+		}
+	}
 }

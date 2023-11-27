@@ -34,15 +34,17 @@ public class BranchController {
 	@ApiOperation(value = "Save Branch", notes = "Api is used to save branch using hospital_id & address_id")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successfully saved"),
 			@ApiResponse(code = 404, message = "Id not found for hospital or address") })
-	@PostMapping("/{hid}/{aid}")
+	@PostMapping()
 	public ResponseEntity<ResponseStructure<Branch>> saveBranch(@Valid @RequestBody Branch branch,
-			@PathVariable int hid, @PathVariable int aid) {
+			@RequestParam int hid, @RequestParam int aid) 
+	{
 		return service.saveBranch(branch, hid, aid);
 	}
 
 	@ApiOperation(value = "Update Branch", notes = "Api is used to update branch using branch_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Updated"),
 			@ApiResponse(code = 404, message = "Id not found for branch") })
+	@PutMapping
 	public ResponseEntity<ResponseStructure<Branch>> updateBranch(@Valid @RequestParam int id,
 			@RequestBody Branch branch) {
 		return service.updateBranch(id, branch);
@@ -51,6 +53,7 @@ public class BranchController {
 	@ApiOperation(value = "Delete Branch", notes = "Api is used to delete branch using branch_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Deleted"),
 			@ApiResponse(code = 404, message = "Id not found for branch") })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<Branch>> deleteBranch(@Valid @RequestParam int id) {
 		return service.deleteBranch(id);
 	}
@@ -58,6 +61,7 @@ public class BranchController {
 	@ApiOperation(value = "Get Branch By Id", notes = "Api is used to fetch branch using branch_id")
 	@ApiResponses(value = { @ApiResponse(code = 302, message = "Successfully Found"),
 			@ApiResponse(code = 404, message = "Id not found for branch") })
+	@GetMapping
 	public ResponseEntity<ResponseStructure<Branch>> getBranchById(@Valid @RequestParam int id) {
 		return service.getBranchById(id);
 	}

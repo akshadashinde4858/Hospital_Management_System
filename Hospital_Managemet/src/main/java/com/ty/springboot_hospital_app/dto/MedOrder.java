@@ -27,6 +27,7 @@ public class MedOrder
 	private String doctor;
 	@ManyToOne
 	private Encounter encounter;
+	
 	public int getId() {
 		return id;
 	}

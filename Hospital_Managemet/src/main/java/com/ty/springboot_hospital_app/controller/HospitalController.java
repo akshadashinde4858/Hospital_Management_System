@@ -1,5 +1,7 @@
 package com.ty.springboot_hospital_app.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ public class HospitalController {
 
 	@ApiOperation(value = "Save Hospital", notes = "Api is used to save hospital")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successfully saved") })
+	@PostMapping
 	public ResponseEntity<ResponseStructure<Hospital>> saveHospital(@Valid @RequestBody Hospital hospital) {
 		return service.saveHospital(hospital);
 	}
@@ -37,6 +40,7 @@ public class HospitalController {
 	@ApiOperation(value = "Update Hospital", notes = "Api is used to update hospital using hospital_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
 			@ApiResponse(code = 404, message = "Id not found for hospital") })
+	@PutMapping
 	public ResponseEntity<ResponseStructure<Hospital>> updateHospital(@Valid @RequestParam int id,
 			@RequestBody Hospital hospital) {
 		return service.updateHospital(id, hospital);
@@ -45,6 +49,7 @@ public class HospitalController {
 	@ApiOperation(value = "Delete Hospital", notes = "Api is used to delete hospital using hospital_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted"),
 			@ApiResponse(code = 404, message = "Id not found for hospital") })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<Hospital>> deleteHospital(@Valid @RequestParam int id) {
 		return service.deleteHospital(id);
 	}
@@ -52,13 +57,21 @@ public class HospitalController {
 	@ApiOperation(value = "Get Hospital By Id", notes = "Api is used to fetch hospital using hospital_id")
 	@ApiResponses(value = { @ApiResponse(code = 302, message = "Successfully found"),
 			@ApiResponse(code = 404, message = "Id not found for hospital") })
+	@GetMapping
 	public ResponseEntity<ResponseStructure<Hospital>> getHospital(@Valid @RequestParam int id) {
 		return service.getHospitalById(id);
 	}
 
-	@GetMapping("/findByGmail")
-	public ResponseEntity<ResponseStructure<Hospital>> findHospitalByEmail(String email)
+//	@GetMapping("/findByGmail")
+//	public ResponseEntity<ResponseStructure<Hospital>> findHospitalByEmail(String email)
+//	{
+//		return service.findHospitalByEmail(email);
+//	}
+	
+
+	@GetMapping("/findAll")
+	public ResponseEntity<ResponseStructure<List<Hospital>>> findAllHospitals()
 	{
-		return service.findHospitalByEmail(email);
+		return service.findAllHospitals();
 	}
 }

@@ -34,6 +34,15 @@ public class BranchDao {
 			branch.setId(id);
 			branch.setHospital(dbBranch.getHospital());
 			branch.setAddress(dbBranch.getAddress());
+			if(branch.getManager() == null) {
+				branch.setManager(dbBranch.getManager());
+			}
+			if(branch.getName() == null) {
+				branch.setName(dbBranch.getName());
+			}
+			if(branch.getPhone() == 0) {
+				branch.setPhone(dbBranch.getPhone());
+			}
 			return repo.save(branch);
 		} else {
 			return null;

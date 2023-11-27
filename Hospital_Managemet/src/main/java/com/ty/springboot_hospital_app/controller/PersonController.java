@@ -2,6 +2,8 @@ package com.ty.springboot_hospital_app.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,20 +32,23 @@ public class PersonController {
 
 	@ApiOperation(value = "Save Person", notes = "Api is used to save person")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successfully saved") })
-	public ResponseEntity<ResponseStructure<Person>> savePerson(@RequestBody Person person) {
+	@PostMapping
+	public ResponseEntity<ResponseStructure<Person>> savePerson(@Valid @RequestBody Person person) {
 		return service.savePerson(person);
 	}
 
 	@ApiOperation(value = "Update Person", notes = "Api is used to update person using person_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully updated"),
 			@ApiResponse(code = 404, message = "Id not found for person") })
-	public ResponseEntity<ResponseStructure<Person>> updatePerson(@RequestParam int id, @RequestBody Person person) {
+	@PutMapping
+	public ResponseEntity<ResponseStructure<Person>> updatePerson(@RequestParam int id,@Valid @RequestBody Person person) {
 		return service.updatePerson(id, person);
 	}
 
 	@ApiOperation(value = "Delete Person", notes = "Api is used to delete person using person_id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully deleted"),
 			@ApiResponse(code = 404, message = "Id not found for person") })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<Person>> deletePerson(@RequestParam int id) {
 		return service.deletePerson(id);
 	}
@@ -51,6 +56,7 @@ public class PersonController {
 	@ApiOperation(value = "Get Person By Id", notes = "Api is used to fetch person using person_id")
 	@ApiResponses(value = { @ApiResponse(code = 302, message = "Successfully found"),
 			@ApiResponse(code = 404, message = "Id not found for person") })
+	@GetMapping
 	public ResponseEntity<ResponseStructure<Person>> getPerson(@RequestParam int id) {
 		return service.getPersonById(id);
 	}

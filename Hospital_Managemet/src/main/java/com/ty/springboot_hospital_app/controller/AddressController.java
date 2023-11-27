@@ -57,5 +57,11 @@ public class AddressController {
 	public ResponseEntity<ResponseStructure<Address>> getAddressById(@Valid @RequestParam int id) {
 		return service.getAddressById(id);
 	}
-
+	
+	@GetMapping("/findbyPincode")
+	public ResponseEntity<ResponseStructure<Address>> findAddressByPincode(@RequestParam int pincode)
+	{
+		return service.findAddressByPincode(pincode);
+	}
 }
+

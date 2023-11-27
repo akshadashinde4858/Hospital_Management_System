@@ -26,6 +26,10 @@ public class MedOrderService {
 
 	public ResponseEntity<ResponseStructure<MedOrder>> updateMedOrder(int id, MedOrder medOrder) {
 		MedOrder dbMedOrder = dao.getMedOrderById(id);
+		if(medOrder.getDate()==null)
+		{
+			medOrder.setDate(dbMedOrder.getDate());
+		}
 		if(dbMedOrder!=null)
 		{
 			medOrder.setEncounter(dbMedOrder.getEncounter());

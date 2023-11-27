@@ -43,5 +43,16 @@ public class AddressDao
 			return null;
 		}
 	}
-
+	
+	public Address findAddressByPincode(int pincode)
+	{
+		Address address= repo.findAddressByPincode(pincode);
+		/*if (address != null) {
+			return address;
+		} else {
+			return null;
+		}*/
+		
+		return address != null ? address : null;
+	}
 }
